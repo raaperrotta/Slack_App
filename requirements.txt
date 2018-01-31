@@ -1,6 +1,11 @@
+aiohttp==0.20.2
+aslack==0.11.0
+atmdb==0.2.3
+bottle==0.12.13
 certifi==2018.1.18
 chardet==3.0.4
 idna==2.6
+python-dateutil==2.6.1
 requests==2.18.4
 six==1.11.0
 slackclient==1.1.1
