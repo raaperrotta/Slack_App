@@ -6,7 +6,7 @@ import urllib
 
 log = logging.getLogger('slash_command')
 
-@post('/slash/test')
+@post('/test')
 def simple_test():
     log.debug('Hello, World!')
     return "Hello World"

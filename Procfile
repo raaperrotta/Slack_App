@@ -1,2 +1,2 @@
-worker: python starterbot.py
 web: python slash.py
+worker: python starterbot.py
