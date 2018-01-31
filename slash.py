@@ -25,8 +25,6 @@ if __name__ == '__main__':
     # Add log handler for Heroku -> PaperTrail
     handler = SysLogHandler()
     handler.setLevel(logging.DEBUG)
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    handler.setFormatter(formatter)
     log.addHandler(handler)
 
     port_config = int(os.getenv('PORT', 5000))
