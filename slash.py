@@ -7,9 +7,17 @@ import urllib
 log = logging.getLogger('slash_command')
 
 @post('/test')
-def simple_test():
+def test():
     log.debug('Hello, World!')
     return "Hello World"
+
+@route('/per_player', method="post")
+def per_player():
+    postdata = request.forms.get("text")
+    message = 'Hello, World!'
+    package = {"response_type": "in_channel", "text": message}
+    response.content_type = 'application/json'
+    return package
 
 if __name__ == '__main__':
 
