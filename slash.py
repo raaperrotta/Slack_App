@@ -2,7 +2,7 @@ from bottle import run, post, request, response, route
 import logging
 import os
 import sys
-import urllib
+from tabulate import tabulate
 
 log = logging.getLogger('slash_command')
 
@@ -16,26 +16,14 @@ def per_player():
     response.content_type = 'application/json'
     message_in = request.forms.get("text")
 
-
     try:
         # Separate list of numbers by spaces
-        nums = message_in.split()
-        nums = [int(num) for num in nums]
-
-        message = '```\n'
-        w = 9  # column width in characters
-        message += ' ' * w  # add empty top left corner
-        # Add column headers with number of points
-        for num in nums:
-            message += f'{num:>{w},.0f}'
-        for num_players in range(2, 10):
-            message += f'\n{num_players:>{w}d}'
-            for num in nums:
-                per_player = (num + num_players - 1) // num_players  # ceil
-                message += f'{per_player:>{w},.0f}'
-        message += '\n```'
-
-        message = 'Hello, World!'
+        nums = [int(num) for num in message_in.split()]
+        players = range(1, 11)
+        data = [[(pts + plrs - 1) // plrs for plrs in players] for pts in nums]
+        data = [[f'{a:,.0f}' for a in b] for b in data]
+        table = tabulate(data, players, stralign='left')
+        message = '```\n' + table + '\n```'
         package = {"response_type": "in_channel", "text": message}
     except Exception as err:
         log.debug(f'Got error while parsing command: {err}')
