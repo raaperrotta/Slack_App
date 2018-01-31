@@ -14,12 +14,12 @@ def test():
 @route('/per_player', method="post")
 def per_player():
     response.content_type = 'application/json'
-    postdata = request.forms.get("text")
+    message_in = request.forms.get("text")
 
 
     try:
         # Separate list of numbers by spaces
-        nums = command.split()
+        nums = message_in.split()
         nums = [int(num) for num in nums]
 
         message = '```\n'
