@@ -1,4 +1,5 @@
 import logging
+from logging.handlers import SysLogHandler
 import os
 import sys
 import time
@@ -60,6 +61,7 @@ def handle_command(command, channel):
     except Exception as err:
         log.debug(f'Got error while parsing command: {err}')
         reply("I don't understand. Did you input a list of numbers?")
+        return
 
     response = '```\n'
     w = 9  # column width in characters
@@ -86,7 +88,7 @@ if __name__ == "__main__":
     log.addHandler(handler)
     
     # Add log handler for Heroku -> PaperTrail
-    handler = logging.handlers.SysLogHandler()
+    handler = SysLogHandler()
     handler.setLevel(logging.DEBUG)
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     handler.setFormatter(formatter)
