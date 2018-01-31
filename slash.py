@@ -20,6 +20,13 @@ if __name__ == '__main__':
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     handler.setFormatter(formatter)
     log.addHandler(handler)
+    
+    # Add log handler for Heroku -> PaperTrail
+    handler = logging.handlers.SysLogHandler()
+    handler.setLevel(logging.DEBUG)
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    handler.setFormatter(formatter)
+    log.addHandler(handler)
 
     port_config = int(os.getenv('PORT', 5000))
     log.debug(f'Using port {port_config}')

@@ -84,6 +84,13 @@ if __name__ == "__main__":
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     handler.setFormatter(formatter)
     log.addHandler(handler)
+    
+    # Add log handler for Heroku -> PaperTrail
+    handler = logging.handlers.SysLogHandler()
+    handler.setLevel(logging.DEBUG)
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    handler.setFormatter(formatter)
+    log.addHandler(handler)
 
     log.debug('Attempting to login to Slack.')
     if slack_client.rtm_connect(with_team_state=False):
