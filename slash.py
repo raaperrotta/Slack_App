@@ -1,6 +1,5 @@
 from bottle import run, post, request, response, route
 import logging
-from logging.handlers import SysLogHandler
 import os
 import sys
 import urllib
@@ -17,13 +16,6 @@ if __name__ == '__main__':
     # Configure log to print messages to console
     log.setLevel(logging.DEBUG)
     handler = logging.StreamHandler(sys.stdout)
-    handler.setLevel(logging.DEBUG)
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    handler.setFormatter(formatter)
-    log.addHandler(handler)
-    
-    # Add log handler for Heroku -> PaperTrail
-    handler = SysLogHandler()
     handler.setLevel(logging.DEBUG)
     log.addHandler(handler)
 
