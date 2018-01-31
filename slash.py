@@ -22,4 +22,5 @@ if __name__ == '__main__':
     log.addHandler(handler)
 
     port_config = int(os.getenv('PORT', 5000))
+    log.debug(f'Using port {port_config}')
     run(host='0.0.0.0', port=port_config)
