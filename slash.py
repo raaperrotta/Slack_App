@@ -18,7 +18,7 @@ def per_player():
         players = range(2, 11)
         data = [[plrs] + [ceil(pts / plrs) for pts in nums] for plrs in players]
         data = [[f'{a:,.0f}' for a in b] for b in data]
-        header = ['# Players'] + [f'{a:,.0f}' for a in nums]
+        header = ['Players \ Points'] + [f'{a:,.0f}' for a in nums]
         table = tabulate(data, header, stralign='right', tablefmt="fancy_grid")
         # Wrap table in triple ticks so it is displayed fixed-width
         message = '```\n' + table + '\n```'
