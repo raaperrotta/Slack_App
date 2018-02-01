@@ -17,12 +17,12 @@ def per_player():
     message_in = request.forms.get("text")
 
     try:
-        # Separate list of numbers by spaces
-        nums = [int(num) for num in message_in.split()]
+        # Separate list of numbers by spaces (possibly with comma tousands separators)
+        nums = [int(num.replace(',', '')) for num in message_in.split()]
         players = range(1, 11)
         data = [[(pts + plrs - 1) // plrs for plrs in players] for pts in nums]
         data = [[f'{a:,.0f}' for a in b] for b in data]
-        table = tabulate(data, players, stralign='left')
+        table = tabulate(data, players, stralign='right')
         message = '```\n' + table + '\n```'
         package = {"response_type": "in_channel", "text": message}
     except Exception as err:
