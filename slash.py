@@ -7,11 +7,6 @@ from tabulate import tabulate
 
 log = logging.getLogger('slash_command')
 
-@post('/test')
-def test():
-    log.debug('Hello, World!')
-    return "Hello World"
-
 @route('/per_player', method="post")
 def per_player():
     response.content_type = 'application/json'
@@ -24,6 +19,7 @@ def per_player():
         data = [[ceil(pts / plrs) for plrs in players] for pts in nums]
         data = [[f'{a:,.0f}' for a in b] for b in data]
         table = tabulate(data, players, stralign='right')
+        # Wrap table in triple ticks so it is displayed fixed-width
         message = '```\n' + table + '\n```'
         package = {"response_type": "in_channel", "text": message}
     except Exception as err:
