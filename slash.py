@@ -18,7 +18,7 @@ def per_player():
         players = range(1, 11)
         data = [[ceil(pts / plrs) for pts in nums] for plrs in players]
         data = [[f'{a:,.0f}' for a in b] for b in data]
-        table = tabulate(data, stralign='right', showindex=players)
+        table = tabulate(data, stralign='right', showindex=players, tablefmt="fancy_grid")
         # Wrap table in triple ticks so it is displayed fixed-width
         message = '```\n' + table + '\n```'
         package = {"response_type": "in_channel", "text": message}
