@@ -16,8 +16,8 @@ def per_player():
         # Separate list of numbers by spaces (possibly with comma tousands separators)
         nums = [float(num.replace(',', '')) for num in message_in.split()]
         players = range(2, 11)
-        data = [[ceil(pts / plrs) for pts in nums] for plrs in players]
-        data = [[n] + [f'{a:,.0f}' for a in b] for n, b in zip(data, players)]
+        data = [[plrs] + [ceil(pts / plrs) for pts in nums] for plrs in players]
+        data = [[f'{a:,.0f}' for a in b] for b in data]
         header = ['# Players'] + [f'{a:,.0f}' for a in nums]
         table = tabulate(data, header, stralign='right', tablefmt="fancy_grid")
         # Wrap table in triple ticks so it is displayed fixed-width
