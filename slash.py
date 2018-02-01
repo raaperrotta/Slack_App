@@ -1,5 +1,6 @@
 from bottle import run, post, request, response, route
 import logging
+from math import ceil
 import os
 import sys
 from tabulate import tabulate
@@ -18,9 +19,9 @@ def per_player():
 
     try:
         # Separate list of numbers by spaces (possibly with comma tousands separators)
-        nums = [int(num.replace(',', '')) for num in message_in.split()]
+        nums = [float(num.replace(',', '')) for num in message_in.split()]
         players = range(1, 11)
-        data = [[(pts + plrs - 1) // plrs for plrs in players] for pts in nums]
+        data = [[ceil(pts / plrs) for plrs in players] for pts in nums]
         data = [[f'{a:,.0f}' for a in b] for b in data]
         table = tabulate(data, players, stralign='right')
         message = '```\n' + table + '\n```'
