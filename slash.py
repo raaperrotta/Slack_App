@@ -19,7 +19,7 @@ def per_player():
         data = [[plrs] + [ceil(pts / plrs) for pts in nums] for plrs in players]
         data = [[f'{a:,.0f}' for a in b] for b in data]
         header = ['Players \ Points'] + [f'{a:,.0f}' for a in nums]
-        table = tabulate(data, header, stralign='right', tablefmt="fancy_grid")
+        table = tabulate(data, header, stralign='right', tablefmt="psql")
         # Wrap table in triple ticks so it is displayed fixed-width
         message = '```\n' + table + '\n```'
         package = {"response_type": "in_channel", "text": message}
