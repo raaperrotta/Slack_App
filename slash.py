@@ -15,10 +15,11 @@ def per_player():
     try:
         # Separate list of numbers by spaces (possibly with comma tousands separators)
         nums = [float(num.replace(',', '')) for num in message_in.split()]
-        players = range(1, 11)
+        players = range(2, 11)
         data = [[ceil(pts / plrs) for pts in nums] for plrs in players]
-        data = [[f'{a:,.0f}' for a in b] for b in data]
-        table = tabulate(data, stralign='right', showindex=players, tablefmt="fancy_grid")
+        data = [[n] + [f'{a:,.0f}' for a in b] for n, b in zip(data, players)]
+        header = ['# Players'] + [f'{a:,.0f}' for a in nums]
+        table = tabulate(data, header, stralign='right', tablefmt="fancy_grid")
         # Wrap table in triple ticks so it is displayed fixed-width
         message = '```\n' + table + '\n```'
         package = {"response_type": "in_channel", "text": message}
