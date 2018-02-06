@@ -19,8 +19,8 @@ def per_player():
     package = {"response_type": "ephemeral", "text": "Oops! Something went wrong. Sorry about that."}
 
     try:
-        data, player_max = calc_table(message_in)
-        table = format_table(data, player_max)
+        nums, data, player_max = calc_table(message_in)
+        table = format_table(nums, data, player_max)
         # Wrap table in triple ticks so it is displayed fixed-width
         message = '```\n' + table + '\n```'
         package = {"response_type": "in_channel", "text": message}
@@ -42,9 +42,9 @@ def calc_table(message_in):
     nums = [float(num.replace(',', '')) for num in message_in]
     players = range(2, 11)
     data = [[plrs] + [ceil(pts / plrs) for pts in nums] for plrs in players]
-    return data, player_max
+    return nums, data, player_max
 
-def format_table(data, player_max):
+def format_table(nums, data, player_max):
     # Replace per_player values that are greater than player max with filler
     data = [[f'{a:,.0f}' if a <= player_max else '-' for a in b] for b in data]
     header = ['Players \ Points'] + [f'{a:,.0f}' for a in nums]
