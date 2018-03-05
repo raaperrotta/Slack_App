@@ -63,7 +63,7 @@ if __name__ == '__main__':
     run(host='0.0.0.0', port=port_config)
 
 @route('/zillow', method=post)
-def link_to_zillow(address):
+def link_to_zillow():
     """ Convert address string to hyperlink to zillow listing search.
     When no results are found, link sends user to zillow search results with
     message that no matching home was found. It would be nice if these cases
@@ -72,6 +72,9 @@ def link_to_zillow(address):
 
     # If there is an error while processing a caught exception, this is the reply
     package = {"response_type": "ephemeral", "text": "Oops! Something went wrong. Sorry about that."}
+
+    response.content_type = 'application/json'
+    address = request.forms.get("text")
 
     try:
         url = 'https://www.zillow.com/homes/'
