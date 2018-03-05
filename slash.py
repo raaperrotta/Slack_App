@@ -62,7 +62,7 @@ if __name__ == '__main__':
     log.debug(f'Using port {port_config}')
     run(host='0.0.0.0', port=port_config)
 
-@route('/zillow', method=post)
+@route('/zillow', method='post')
 def link_to_zillow():
     """ Convert address string to hyperlink to zillow listing search.
     When no results are found, link sends user to zillow search results with
