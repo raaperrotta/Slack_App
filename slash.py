@@ -67,8 +67,7 @@ def link_to_zillow():
 
         url = 'https://www.zillow.com/homes/'
         url += address.replace(' ', '-').replace(',', '')
-        message = f'<a href="{url}">{address}</a>'
-        package = {"response_type": "in_channel", "text": message}
+        package = {"response_type": "in_channel", "text": url}
     except Exception as err:
         log.debug(f'Got error while parsing command: {err}')
         message = f'Uh-oh! Something went wrong while parsing your input.\n(Error: {err})'
