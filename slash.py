@@ -61,3 +61,26 @@ if __name__ == '__main__':
     port_config = int(os.getenv('PORT', 5000))
     log.debug(f'Using port {port_config}')
     run(host='0.0.0.0', port=port_config)
+
+@route('/zillow', method=post)
+def link_to_zillow(address):
+    """ Convert address string to hyperlink to zillow listing search.
+    When no results are found, link sends user to zillow search results with
+    message that no matching home was found. It would be nice if these cases
+    could be identified and handled before responding to the user.
+    """
+
+    # If there is an error while processing a caught exception, this is the reply
+    package = {"response_type": "ephemeral", "text": "Oops! Something went wrong. Sorry about that."}
+
+    try:
+        url = 'https://www.zillow.com/homes/'
+        url += address.replace(' ', '-').replace(',', '')
+        message = f'<a href="{url}">{address}</a>'
+        package = {"response_type": "in_channel", "text": message}
+    except Exception as err:
+        log.debug(f'Got error while parsing command: {err}')
+        message = f'Uh-oh! Something went wrong while parsing your input.\n(Error: {err})'
+        package = {"response_type": "ephemeral", "text": message}
+    finally:
+        return package
