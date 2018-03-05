@@ -67,6 +67,7 @@ def link_to_zillow():
 
         url = 'https://www.zillow.com/homes/'
         url += address.replace(' ', '-').replace(',', '')
+        url += '_rb'  # Why "rb"? Is it always "rb"?
         package = {"response_type": "in_channel", "text": url}
     except Exception as err:
         log.debug(f'Got error while parsing command: {err}')
