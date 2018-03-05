@@ -50,18 +50,6 @@ def format_table(nums, data, player_max):
     header = ['Players \ Points'] + [f'{a:,.0f}' for a in nums]
     return tabulate(data, header, stralign='right', tablefmt="psql")
 
-if __name__ == '__main__':
-
-    # Configure log to print messages to console
-    log.setLevel(logging.DEBUG)
-    handler = logging.StreamHandler(sys.stdout)
-    handler.setLevel(logging.DEBUG)
-    log.addHandler(handler)
-
-    port_config = int(os.getenv('PORT', 5000))
-    log.debug(f'Using port {port_config}')
-    run(host='0.0.0.0', port=port_config)
-
 @route('/zillow', method='post')
 def link_to_zillow():
     """ Convert address string to hyperlink to zillow listing search.
@@ -73,10 +61,10 @@ def link_to_zillow():
     # If there is an error while processing a caught exception, this is the reply
     package = {"response_type": "ephemeral", "text": "Oops! Something went wrong. Sorry about that."}
 
-    response.content_type = 'application/json'
-    address = request.forms.get("text")
-
     try:
+        response.content_type = 'application/json'
+        address = request.forms.get("text")
+
         url = 'https://www.zillow.com/homes/'
         url += address.replace(' ', '-').replace(',', '')
         message = f'<a href="{url}">{address}</a>'
@@ -87,3 +75,15 @@ def link_to_zillow():
         package = {"response_type": "ephemeral", "text": message}
     finally:
         return package
+
+if __name__ == '__main__':
+
+    # Configure log to print messages to console
+    log.setLevel(logging.DEBUG)
+    handler = logging.StreamHandler(sys.stdout)
+    handler.setLevel(logging.DEBUG)
+    log.addHandler(handler)
+
+    port_config = int(os.getenv('PORT', 5000))
+    log.debug(f'Using port {port_config}')
+    run(host='0.0.0.0', port=port_config)
